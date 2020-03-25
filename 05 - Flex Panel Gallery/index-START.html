@@ -104,13 +104,50 @@
       font-size: 40px;
     }
 
+    #hidden {
+      width: 0;
+      height: 0;
+    }
+
+    #dance-button {
+      z-index: 1000;
+      width: 100px;
+      height: 100px;
+    }
+
+    audio {
+      display: none;
+    }
+
   
 
   </style>
 
 
   <div class="panels">
-    <div class="panel panel1 open open-active">
+    <div id="hidden">
+<audio class="audio" id="dance" controls>
+  <source src="dance.mp3" type="audio/mpeg">
+</audio>
+<audio class="audio" id="chance" controls>
+  <source src="chance.mp3" type="audio/mpeg">
+</audio>
+<audio class="audio" id="it" controls>
+  <source src="it.mp3" type="audio/mpeg">
+</audio>
+<audio class="audio" id="give" controls>
+  <source src="give.mp3" type="audio/mpeg">
+</audio>
+<audio class="audio" id="motion" controls>
+  <source src="motion.mp3" type="audio/mpeg">
+</audio>
+<button id="it-button" onclick="playIt()" type="button"></button>
+<button id="give-button" onclick="playGive()" type="button"></button>
+<button id="motion-button" onclick="playMotion()" type="button"></button>
+<button id="chance-button" onclick="playChance()" type="button"></button>
+<button id="dance-button" onclick="playDance()" type="button"></button>
+    </div>
+    <div class="panel panel1">
       <p>Hey</p>
       <p>Let's</p>
       <p>Dance</p>
@@ -140,14 +177,74 @@
   <script>
 
     let panels = document.querySelectorAll(".panel")
+    let danceAudio = document.getElementById("dance")
+    let danceButton = document.getElementById("dance-button")
+    let chanceAudio = document.getElementById("chance")
+    let chanceButton = document.getElementById("chance-button")
+    let itAudio = document.getElementById("it")
+    let itButton = document.getElementById("it-button")
+    let giveAudio = document.getElementById("give")
+    let giveButton = document.getElementById("give-button")    
+    let motionAudio = document.getElementById("motion")
+    let motionButton = document.getElementById("motion-button") 
+
+    function playDance() {
+      danceAudio.play()
+      chanceAudio.pause()
+      giveAudio.pause()
+      itAudio.pause()
+      motionAudio.pause()
+
+    }
+    function playGive() {
+      giveAudio.play()
+      chanceAudio.pause()
+      danceAudio.pause()
+      itAudio.pause()
+      motionAudio.pause()
+    }
+    function playIt() {
+      itAudio.play()
+      chanceAudio.pause()
+      danceAudio.pause()
+      giveAudio.pause()
+      motionAudio.pause()
+    }
+    function playChance() {
+      chanceAudio.play()
+      danceAudio.pause()
+      itAudio.pause()
+      motionAudio.pause()
+      giveAudio.pause()
+    }
+    function playMotion() {
+        motionAudio.play()
+        danceAudio.pause()
+        chanceAudio.pause()
+        itAudio.pause()
+        giveAudio.pause()
+      }
 
     function toggleOpen() {
       this.classList.toggle("open");
     }
 
     function toggleOpenActive() {
-        this.classList.toggle("open-active");
+      if (!this.classList.contains("open-active")) {
+        if (this.classList.contains("panel1")) {
+          danceButton.click()
+        } else if (this.classList.contains("panel2")) {
+          chanceButton.click()
+         } else if (this.classList.contains("panel3")) {
+          itButton.click()
+         } else if (this.classList.contains("panel4")) {
+          giveButton.click()
+        } else if (this.classList.contains("panel5")) {
+          motionButton.click()
+        }
       }
+      this.classList.toggle("open-active");
+    }
 
     panels.forEach(panel => panel.addEventListener("click", toggleOpen))
     panels.forEach(panel => panel.addEventListener("click", toggleOpenActive))
